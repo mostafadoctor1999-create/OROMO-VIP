@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OROMO VIP - مدخل طه حسين</title>
+    <style>
+        * { box-sizing: border-box; font-family: system-ui, -apple-system, 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; }
+        body {
+            background: linear-gradient(135deg, #050d1a 0%, #0a192f 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px;
+        }
+        .header { text-align: center; margin-bottom: 18px; }
+        .header h1 { color: #d4af37; font-size: 26px; font-weight: 900; letter-spacing: 2px; }
+        .header p { color: #8892b0; font-size: 13px; margin-top: 4px; }
+
+        .card {
+            width: 100%;
+            max-width: 390px;
+            background: linear-gradient(145deg, #112240, #0a192f);
+            border: 2px solid #d4af37;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 12px 30px rgba(212, 175, 55, 0.2);
+            margin-bottom: 16px;
+        }
+        .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+        .brand { font-size: 20px; font-weight: 800; color: #d4af37; }
+        .badge { background: rgba(212, 175, 55, 0.15); color: #f3e5ab; padding: 4px 12px; border-radius: 20px; font-size: 12px; border: 1px solid #d4af37; }
+
+        .stamps-title { font-size: 13px; color: #ccd6f6; margin-bottom: 12px; }
+        .stamps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+        .stamp {
+            height: 56px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px dashed rgba(212, 175, 55, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+        .stamp.active {
+            background: linear-gradient(135deg, #d4af37, #b5891c);
+            border: none;
+            color: #0a192f;
+            font-weight: bold;
+        }
+        .stamp.gift { border: 1px solid #d4af37; font-size: 12px; font-weight: bold; color: #d4af37; text-align: center; }
+
+        .box {
+            width: 100%;
+            max-width: 390px;
+            background: #112240;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            margin-bottom: 14px;
+        }
+        .pager-status { font-size: 15px; font-weight: 700; margin-top: 8px; color: #64ffda; }
+        .pager-ready { background: #1b4332; border: 2px solid #40916c; }
+
+        .upsell-box {
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(17, 34, 64, 0.9));
+            border: 1px solid #d4af37;
+        }
+        .upsell-title { color: #d4af37; font-weight: 800; font-size: 16px; margin-bottom: 6px; }
+        .upsell-desc { color: #e6f1ff; font-size: 13px; margin-bottom: 12px; line-height: 1.5; }
+
+        .btn {
+            width: 100%;
+            max-width: 390px;
+            padding: 13px;
+            border: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        .btn-gold { background: #d4af37; color: #0a192f; }
+        .btn-outline { background: transparent; border: 1px solid #d4af37; color: #d4af37; }
+        .btn-green { background: #25D366; color: #ffffff; }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 999;
+        }
+        .modal-content {
+            background: #112240;
+            border: 2px solid #d4af37;
+            border-radius: 18px;
+            padding: 20px;
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            margin: 12px 0;
+            font-size: 15px;
+            background: #0a192f;
+            color: #fff;
+            border: 1px solid #d4af37;
+        }
+        .admin-toggle { margin-top: 20px; font-size: 12px; color: #8892b0; cursor: pointer; text-decoration: underline; }
+        .admin-panel {
+            display: none;
+            width: 100%;
+            max-width: 390px;
+            background: #1d2d50;
+            padding: 15px;
+            border-radius: 14px;
+            margin-top: 12px;
+            border: 1px solid #64ffda;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>OROMO COFFEE</h1>
+        <p>مدخل شارع طه حسين - الدور الأرضي - المنيا</p>
+    </div>
+
+    <!-- 1. كارت النخبة -->
+    <div class="card">
+        <div class="card-top">
+            <span class="brand">كارت النخبة VIP</span>
+            <span class="badge">عضوية ذهبية</span>
+        </div>
+        <div class="stamps-title">اجمع 5 أكواب قهوة واحصل على السادس + بسكويت مجاناً:</div>
+        <div class="stamps-grid">
+            <div class="stamp active">☕</div>
+            <div class="stamp active">☕</div>
+            <div class="stamp">3</div>
+            <div class="stamp">4</div>
+            <div class="stamp">5</div>
+            <div class="stamp gift">🎁<br>مجاناً</div>
+        </div>
+        <div style="font-size: 12px; color: #f3e5ab; text-align: center;">رقم العضوية: #ORM-2026</div>
+    </div>
+
+    <!-- 2. البيجر الإلكتروني -->
+    <div class="box" id="pagerBox">
+        <div style="font-size: 12px; color: #8892b0;">البيجر الإلكتروني الصامت (حالة طلبك)</div>
+        <div class="pager-status" id="pagerStatus">⏳ في انتظار تسجيل طلبك...</div>
+    </div>
+
+    <!-- 3. عرض رفيق القهوة -->
+    <div class="box upsell-box">
+        <div class="upsell-title">🍪 كمل مزاجك مع قهوتك!</div>
+        <div class="upsell-desc">أضف قطعة كوكيز طازجة أو بسكويت OROMO بـ <strong>15 جنيه فقط</strong> بدلاً من 25 جنيه مع قهوتك اليوم.</div>
+        <button class="btn btn-gold" style="margin-bottom:0;" onclick="claimCookie()">أضف العرض لطلبي الآن</button>
+        <div id="cookieConfirm" style="display:none; color:#64ffda; font-size:13px; margin-top:8px; font-weight:bold;">✅ تم تفعيل العرض! أظهر الشاشة للكاشير</div>
+    </div>
+
+    <!-- 4. أزرار التفاعل السريع -->
+    <button class="btn btn-green" onclick="openFastOrder()">🚀 أنا على أول الشارع - جهز قهوتي</button>
+    <button class="btn btn-outline" onclick="inviteFriend()">🤝 اعزم صاحبك واكسب ختم هدية</button>
+    <button class="btn btn-gold" onclick="enableRadar()">🔔 تفعيل الإشعارات ورادار طه حسين</button>
+    <div id="radarStatus" style="font-size: 12px; color: #8892b0; text-align: center; margin-bottom: 10px;"></div>
+
+    <!-- لوحة تحكم الباريستا والكاشير -->
+    <div class="admin-toggle" onclick="toggleAdmin()">لوحة تحكم الكاشير / الباريستا (للتجربة)</div>
+    <div class="admin-panel" id="adminPanel">
+        <h4 style="color: #64ffda; margin-bottom: 12px; text-align: center;">تحكم الكاشير الفوري</h4>
+        <button class="btn btn-outline" onclick="addStamp()">➕ إضافة ختم كوب قهوة للزبون</button>
+        <button class="btn btn-gold" onclick="ringPager()">🔔 نداء: القهوة جاهزة للاستلام!</button>
+        <button class="btn btn-outline" onclick="simulateRadar()">📍 محاكاة مرور الزبون بمدخل طه حسين</button>
+        <button class="btn btn-gold" onclick="showQR()">📱 عرض باركود الكاشير (QR Code)</button>
+    </div>
+
+    <!-- نافذة طلب الصباح السريع -->
+    <div class="modal" id="fastModal">
+        <div class="modal-content">
+            <h3 style="color:#d4af37;">طلب الصباح السريع</h3>
+            <p style="font-size:13px; color:#ccd6f6; margin-top:6px;">اختر قهوتك وسنجهزها فوراً قبل وصولك للشباك:</p>
+            <select id="coffeeType">
+                <option value="إسبريسو">إسبريسو</option>
+                <option value="لاتيه">لاتيه</option>
+                <option value="قهوة تركي">قهوة تركي</option>
+                <option value="أمريكانو">أمريكانو</option>
+                <option value="فلات وايت">فلات وايت</option>
+            </select>
+            <button class="btn btn-green" onclick="sendWhatsAppOrder()">إرسال الطلب عبر واتساب</button>
+            <button class="btn btn-outline" onclick="closeModals()">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة الباركود -->
+    <div class="modal" id="qrModal">
+        <div class="modal-content">
+            <h3 style="color:#d4af37; margin-bottom:10px;">باركود كاشير OROMO</h3>
+            <p style="font-size:12px; color:#ccd6f6; margin-bottom:12px;">امسح الكود بكاميرا الموبايل لفتح الكارت فوراً:</p>
+            <img id="qrImg" src="" alt="QR Code" style="width:200px; height:200px; border-radius:12px; border:4px solid #fff; margin-bottom:12px;">
+            <button class="btn btn-gold" onclick="closeModals()">تم</button>
+        </div>
+    </div>
+
+    <script>
+        let currentStamps = 2;
+
+        function notify(title, body) {
+            if (navigator.vibrate) navigator.vibrate();
+            if ("Notification" in window && Notification.permission === "granted") {
+                new Notification(title, { body: body });
+            } else {
+                alert(title + "\n" + body);
+            }
+        }
+
+        function enableRadar() {
+            if ("Notification" in window) {
+                Notification.requestPermission().then(p => {
+                    document.getElementById("radarStatus").innerText = p === "granted" ? "✅ الرادار والإشعارات مفعلة بنجاح!" : "⚠️ تم التفعيل في وضع التنبيه الداخلي";
+                    document.getElementById("radarStatus").style.color = "#64ffda";
+                });
+            }
