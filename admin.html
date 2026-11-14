@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة تحكم الكاشير - OROMO COFFEE</title>
+  <link href="https://googleapis.com" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
+    body { background: #0f172a; color: #fff; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+    h1 { color: #eab308; margin-bottom: 20px; font-size: 22px; }
+    .container { width: 100%; max-width: 500px; background: #1e293b; padding: 20px; border-radius: 15px; }
+    .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+    input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #475569; background: #0f172a; color: #fff; font-size: 16px; }
+    button { padding: 12px 16px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 14px; }
+    .btn-primary { background: #eab308; color: #000; }
+    .btn-success { background: #10b981; color: #fff; width: 100%; margin-bottom: 10px; }
+    .btn-warning { background: #f59e0b; color: #000; width: 100%; margin-bottom: 10px; }
+    .btn-info { background: #3b82f6; color: #fff; width: 100%; margin-bottom: 10px; }
+    .btn-danger { background: #ef4444; color: #fff; width: 100%; }
+    .status-panel { background: #0f172a; padding: 15px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #334155; }
+    .status-panel p { margin-bottom: 8px; font-size: 15px; }
+    .alert-badge { display: inline-block; padding: 4px 10px; border-radius: 6px; font-size: 13px; font-weight: bold; }
+    .yes { background: #10b981; color: #fff; }
+    .no { background: #475569; color: #cbd5e1; }
+  </style>
+</head>
+<body>
+
+  <h1>☕ لوحة تحكم الكاشير - OROMO</h1>
+
+  <div class="container">
+    <div class="search-box">
+      <input type="text" id="member-input" placeholder="أدخل رقم العضوية (مثال: ORM-2026)" value="ORM-2026">
+      <button class="btn-primary" id="btn-load">عرض</button>
+    </div>
+
+    <div class="status-panel" id="panel" style="display:none;">
+      <p>رقم العضوية: <strong id="lbl-id" style="color:#eab308;"></strong></p>
+      <p>عدد الأكواب الحالية: <strong id="lbl-cups" style="font-size:20px;">0</strong> / 5</p>
+      <p>طلب عرض الكوكيز (15ج): <span id="lbl-offer" class="alert-badge no">لا</span></p>
+      <p>إشعار "على أول الشارع": <span id="lbl-way" class="alert-badge no">لا</span></p>
+      <p>حالة البيجر الحالية: <strong id="lbl-pager" style="color:#38bdf8;"></strong></p>
+    </div>
+
+    <div id="controls" style="display:none;">
+      <button class="btn-success" id="btn-add-cup">➕ إضافة كوب قهوة (+1)</button>
+      <button class="btn-warning" id="btn-reset-cups">🎁 تصفير العداد (تم استلام الهدية)</button>
+      <hr style="border-color:#334155; margin: 15px 0;">
+      <button class="btn-info" id="btn-pager-prep">⏳ تحديث البيجر: جاري تحضير طلبك...</button>
+      <button class="btn-success" id="btn-pager-ready">🔔 تحديث البيجر: قهوتك جاهزة للاستلام!</button>
+      <button class="btn-danger" id="btn-reset-order">🔄 إنهاء الطلب وإعادة ضبط البيجر</button>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://gstatic.com";
+    import { getDatabase, ref, onValue, update } from "https://gstatic.com";
+
+    // ⚠️ ضع نفس بيانات مشروعك من Firebase هنا ⚠️
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_://firebaseapp.com",
+      databaseURL: "https://YOUR_://firebaseio.com",
+      projectId: "YOUR_PROJECT",
+      storageBucket: "YOUR_://appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+    let currentRef = null;
+    let currentCups = 0;
+
+    document.getElementById('btn-load').addEventListener('click', () => {
+      const id = document.getElementById('member-input').value.trim();
+      if (!id) return alert('اكتب رقم العضوية أولاً');
+
+      currentRef = ref(db, 'users/' + id);
+      document.getElementById('lbl-id').innerText = id;
+      document.getElementById('panel').style.display = 'block';
+      document.getElementById('controls').style.display = 'block';
+
+      onValue(currentRef, (snapshot) => {
+        const data = snapshot.val() || { cups: 0, pagerStatus: "في الانتظار", addedOffer: false, onTheWay: false };
+        currentCups = data.cups || 0;
+
+        document.getElementById('lbl-cups').innerText = currentCups;
+        document.getElementById('lbl-pager').innerText = data.pagerStatus;
+
+        const offerEl = document.getElementById('lbl-offer');
+        offerEl.innerText = data.addedOffer ? 'نعم (مطلوب كوكيز!) 🍪' : 'لا';
+        offerEl.className = data.addedOffer ? 'alert-badge yes' : 'alert-badge no';
+
+        const wayEl = document.getElementById('lbl-way');
+        wayEl.innerText = data.onTheWay ? 'نعم (العميل قادم الآن!) 🚀' : 'لا';
+        wayEl.className = data.onTheWay ? 'alert-badge yes' : 'alert-badge no';
+      });
+    });
+
+    // إضافة كوب
+    document.getElementById('btn-add-cup').addEventListener('click', () => {
+      if (currentCups < 5) {
+        update(currentRef, { cups: currentCups + 1 });
+      } else {
+        alert('العميل أتم 5 أكواب بالفعل ويستحق الكوب السادس مجاناً!');
+      }
+    });
+
+    // تصفير الأكواب بعد الهدية
+    document.getElementById('btn-reset-cups').addEventListener('click', () => {
+      update(currentRef, { cups: 0 });
+    });
+
+    // تحديثات البيجر
+    document.getElementById('btn-pager-prep').addEventListener('click', () => {
+      update(currentRef, { pagerStatus: "☕ جاري تحضير قهوتك الآن..." });
+    });
+
+    document.getElementById('btn-pager-ready').addEventListener('click', () => {
+      update(currentRef, { pagerStatus: "✅ قهوتك جاهزة! تفضل بالاستلام من الكاشير" });
+    });
+
+    // إنهاء الطلب وتصفير التنبيهات
+    document.getElementById('btn-reset-order').addEventListener('click', () => {
+      update(currentRef, { 
+        pagerStatus: "⏳ في انتظار تسجيل طلبك...",
+        addedOffer: false,
+        onTheWay: false
+      });
+    });
+  </script>
+</body>
+</html>
