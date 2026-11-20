@@ -1,275 +1,525 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OROMO COFFEE - كارت النخبة VIP</title>
-  <link href="https://googleapis.com" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OROMO VIP — كارت النخبة والبيجر الصامت</title>
   <style>
-    * { box-sizing: border-box; font-family: 'Cairo', sans-serif; margin: 0; padding: 0; }
+    :root {
+      --bg: #120d0a;
+      --card: #1e1510;
+      --card-2: #281c15;
+      --gold: #d4a359;
+      --gold-soft: rgba(212, 163, 89, 0.16);
+      --text: #f7efe6;
+      --muted: #b9a796;
+      --green: #22c55e;
+      --amber: #f59e0b;
+      --danger: #ef4444;
+      --border: rgba(212, 163, 89, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+    }
+
     body {
-      background-color: #0b1120;
-      color: #ffffff;
+      background: radial-gradient(circle at top, #271a12 0%, var(--bg) 65%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 18px 14px 40px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 460px;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      padding: 20px 15px;
-      min-height: 100vh;
+      gap: 14px;
     }
-    .header { text-align: center; margin-bottom: 20px; }
-    .header h1 { color: #eab308; font-size: 26px; letter-spacing: 2px; font-weight: 800; }
-    .header p { color: #94a3b8; font-size: 13px; margin-top: 4px; }
+
+    .header {
+      text-align: center;
+      padding: 8px 6px 4px;
+    }
+
+    .header h1 {
+      font-size: 1.65rem;
+      letter-spacing: 1px;
+      color: var(--gold);
+    }
+
+    .header p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
 
     .card {
-      background: #131c31;
-      border: 1px solid #eab308;
+      background: linear-gradient(160deg, var(--card-2), var(--card));
+      border: 1px solid var(--border);
       border-radius: 18px;
-      padding: 20px;
-      width: 100%;
-      max-width: 400px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      padding: 16px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
     }
-    .card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
-    .card-header h2 { color: #eab308; font-size: 18px; font-weight: 700; }
-    .badge {
-      border: 1px solid #eab308;
-      color: #eab308;
-      padding: 3px 12px;
-      border-radius: 20px;
-      font-size: 12px;
-      background: rgba(234, 179, 8, 0.1);
-    }
-    .sub-text { color: #cbd5e1; font-size: 13px; margin-bottom: 18px; }
 
-    .grid-cups {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 12px;
-      margin-bottom: 18px;
+    .vip-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
     }
-    .cup-box {
-      background: #1e293b;
-      border: 1px dashed #475569;
+
+    .vip-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+    }
+
+    .badge {
+      background: var(--gold-soft);
+      color: var(--gold);
+      border: 1px solid var(--border);
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .vip-desc {
+      font-size: 0.9rem;
+      color: var(--text);
+      margin-bottom: 14px;
+      line-height: 1.5;
+    }
+
+    .stamps {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 7px;
+      margin-bottom: 14px;
+    }
+
+    .stamp {
+      aspect-ratio: 1 / 1.15;
       border-radius: 12px;
-      height: 65px;
+      border: 1.5px dashed rgba(212, 163, 89, 0.35);
+      background: rgba(0, 0, 0, 0.25);
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
-      font-size: 18px;
-      font-weight: bold;
-      color: #94a3b8;
-      transition: all 0.3s ease;
-    }
-    .cup-box.active {
-      background: linear-gradient(135deg, #f59e0b, #d97706);
-      border: none;
-      color: #fff;
-      font-size: 24px;
-      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
-    }
-    .cup-box.gift {
-      border: 1px solid #eab308;
-      color: #eab308;
-      font-size: 13px;
-    }
-    .cup-box.gift.unlocked {
-      background: linear-gradient(135deg, #10b981, #059669);
-      color: #fff;
-      border: none;
-    }
-
-    .member-id { text-align: center; color: #94a3b8; font-size: 13px; letter-spacing: 1px; }
-
-    .pager-card {
-      background: #131c31;
-      border: 1px solid #1e293b;
-      border-radius: 15px;
-      padding: 16px;
-      width: 100%;
-      max-width: 400px;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--muted);
+      transition: all 0.2s ease;
       text-align: center;
-      margin-bottom: 16px;
+      padding: 2px;
     }
-    .pager-title { color: #94a3b8; font-size: 12px; margin-bottom: 6px; }
-    .pager-status { color: #38bdf8; font-size: 16px; font-weight: 700; }
 
-    .offer-card {
-      background: #131c31;
-      border: 1px solid #475569;
-      border-radius: 18px;
-      padding: 20px;
-      width: 100%;
-      max-width: 400px;
-      text-align: center;
-      margin-bottom: 16px;
+    .stamp.active {
+      background: var(--gold);
+      color: #1a110b;
+      border-style: solid;
+      border-color: var(--gold);
+      transform: translateY(-2px);
     }
-    .offer-card h3 { color: #eab308; font-size: 16px; margin-bottom: 8px; }
-    .offer-card p { color: #e2e8f0; font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
 
-    .btn {
-      width: 100%;
-      max-width: 400px;
-      padding: 14px;
+    .stamp.gift {
+      font-size: 0.75rem;
+      line-height: 1.2;
+    }
+
+    .stamp.gift.unlocked {
+      background: var(--green);
+      color: #09180e;
+      border-color: var(--green);
+    }
+
+    .member-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .member-input {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      border-radius: 10px;
+      padding: 6px 10px;
+      font-size: 0.82rem;
+      width: 140px;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    button, a.btn {
       border: none;
       border-radius: 12px;
-      font-size: 15px;
+      padding: 10px 14px;
+      font-size: 0.88rem;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.1s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: opacity 0.18s ease, transform 0.15s ease;
     }
-    .btn:active { transform: scale(0.98); }
-    .btn-offer { background: #eab308; color: #0b1120; }
-    .btn-offer.added { background: #475569; color: #fff; }
-    .btn-ready { background: #10b981; color: #ffffff; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); }
-    .btn-ready.sent { background: #059669; }
+
+    button:active, a.btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-gold {
+      background: var(--gold);
+      color: #18100a;
+      flex: 1;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+
+    .btn-green {
+      background: var(--green);
+      color: #08180e;
+      width: 100%;
+    }
+
+    .pager-status {
+      margin-top: 10px;
+      padding: 14px;
+      border-radius: 14px;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .pager-status.waiting {
+      color: var(--muted);
+    }
+
+    .pager-status.preparing {
+      color: var(--amber);
+      border-color: rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .pager-status.ready {
+      color: var(--green);
+      border-color: rgba(34, 197, 94, 0.5);
+      background: rgba(34, 197, 94, 0.12);
+    }
+
+    .upsell h3 {
+      color: var(--gold);
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+    }
+
+    .upsell p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .price-strike {
+      text-decoration: line-through;
+      opacity: 0.7;
+      margin: 0 4px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin: 10px 0;
+    }
+
+    .star-btn {
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 1.3rem;
+      padding: 6px 10px;
+      border-radius: 10px;
+    }
+
+    .star-btn.selected {
+      background: var(--gold-soft);
+      color: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .feedback-note {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+      min-height: 20px;
+      margin-top: 6px;
+    }
   </style>
 </head>
 <body>
+  <main class="app">
+    <header class="header">
+      <h1>OROMO COFFEE</h1>
+      <p>مدخل شارع طه حسين — الدور الأرضي — المنيا</p>
+    </header>
 
-  <div class="header">
-    <h1>OROMO COFFEE</h1>
-    <p>مدخل شارع طه حسين - الدور الأرضي - المنيا</p>
-  </div>
+    <!-- كارت الولاء VIP -->
+    <section class="card" aria-label="كارت النخبة VIP">
+      <div class="vip-top">
+        <div class="vip-title">كارت النخبة VIP</div>
+        <span class="badge">عضوية ذهبية</span>
+      </div>
+      <p class="vip-desc">
+        اجمع 5 أكواب قهوة واحصل على السادس + بسكويت مجاناً:
+      </p>
 
-  <!-- كارت النخبة -->
-  <div class="card">
-    <div class="card-header">
-      <h2>كارت النخبة VIP</h2>
-      <span class="badge">عضوية ذهبية</span>
-    </div>
-    <p class="sub-text">اجمع 5 أكواب قهوة واحصل على السادس + بسكويت مجاناً:</p>
+      <div class="stamps" id="stampsGrid"></div>
 
-    <div class="grid-cups">
-      <div class="cup-box" id="cup-1">1</div>
-      <div class="cup-box" id="cup-2">2</div>
-      <div class="cup-box" id="cup-3">3</div>
-      <div class="cup-box" id="cup-4">4</div>
-      <div class="cup-box" id="cup-5">5</div>
-      <div class="cup-box gift" id="cup-6">🎁<br>مجاناً</div>
-    </div>
+      <div class="member-row">
+        <label for="memberCode">رقم العضوية:</label>
+        <input
+          id="memberCode"
+          class="member-input"
+          type="text"
+          value="#ORM-2026"
+          aria-label="رقم العضوية"
+        />
+      </div>
 
-    <div class="member-id" id="display-id">رقم العضوية: #ORM-2026</div>
-  </div>
+      <div class="btn-row">
+        <button class="btn-gold" id="addStampBtn" type="button">+ إضافة ختم قهوة</button>
+        <button class="btn-outline" id="resetStampBtn" type="button">تصفير</button>
+      </div>
+    </section>
 
-  <!-- البيجر الإلكتروني -->
-  <div class="pager-card">
-    <div class="pager-title">البيجر الإلكتروني الصامت (حالة طلبك)</div>
-    <div class="pager-status" id="pager-status">⏳ في انتظار تسجيل طلبك...</div>
-  </div>
+    <!-- البيجر الإلكتروني الصامت -->
+    <section class="card" aria-label="البيجر الإلكتروني الصامت">
+      <div class="vip-top">
+        <div class="vip-title">البيجر الإلكتروني الصامت</div>
+        <span class="badge" id="orderNumBadge">طلب #101</span>
+      </div>
 
-  <!-- عرض الكوكيز -->
-  <div class="offer-card">
-    <h3>🍪 كمل مزاجك مع قهوتك!</h3>
-    <p>أضف قطعة كوكيز طازجة أو بسكويت OROMO بـ 15 جنيه فقط بدلاً من 25 جنيه مع قهوتك اليوم.</p>
-    <button class="btn btn-offer" id="btn-offer">أضف العرض لطلبي الآن</button>
-  </div>
+      <div class="pager-status waiting" id="pagerBox">
+        ⏳ في انتظار تسجيل طلبك...
+      </div>
 
-  <!-- زر التجهيز -->
-  <button class="btn btn-ready" id="btn-ready">🚀 أنا على أول الشارع - جهز قهوتي</button>
+      <div class="btn-row" style="margin-top: 12px;">
+        <button class="btn-outline" id="prepBtn" type="button" style="flex:1;">قيد التحضير</button>
+        <button class="btn-gold" id="readyBtn" type="button" style="flex:1;">جاهز للاستلام ☕</button>
+      </div>
+    </section>
 
-  <!-- ربط Firebase -->
-  <script type="module">
-    import { initializeApp } from "https://gstatic.com";
-    import { getDatabase, ref, onValue, update, set, get } from "https://gstatic.com";
+    <!-- عرض الكوكيز والبسكويت -->
+    <section class="card upsell" aria-label="عرض الكوكيز والبسكويت">
+      <h3>🍪 كمل مزاجك مع قهوتك!</h3>
+      <p>
+        أضف قطعة كوكيز طازجة أو بسكويت OROMO بـ <strong>15 جنيه</strong> فقط بدلاً من
+        <span class="price-strike">25 جنيه</span> مع قهوتك اليوم.
+      </p>
+      <a
+        id="whatsappUpsellBtn"
+        class="btn btn-green"
+        href="https://wa.me/201000000000?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%A3%D9%88%D8%B1%D9%85%D9%88%D8%8C%20%D8%A3%D8%AD%D8%A8%20%D8%A3%D8%B6%D9%8A%D9%81%20%D9%83%D9%88%D9%83%D9%8A%D8%B2%2F%D8%A8%D8%B3%D9%83%D9%88%D9%8A%D8%AA%20%D8%A8%D9%80%2015%20%D8%AC%D9%86%D9%8A%D9%87%20%D9%85%D8%B9%20%D8%B7%D9%84%D8%A8%D9%8A."
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        اطلب الإضافة الآن (+15 ج) عبر واتساب
+      </a>
+    </section>
 
-    // ⚠️ ضع بيانات مشروعك من Firebase هنا ⚠️
-    const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_://firebaseapp.com",
-      databaseURL: "https://YOUR_://firebaseio.com",
-      projectId: "YOUR_PROJECT",
-      storageBucket: "YOUR_://appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID"
+    <!-- تقييم سريع -->
+    <section class="card" aria-label="تقييم التجربة">
+      <div class="vip-title" style="text-align: center; font-size: 0.98rem;">
+        قيّم تجربتك اليوم مع أورمو
+      </div>
+      <div class="stars" id="starsContainer">
+        <button class="star-btn" data-star="1" type="button">★</button>
+        <button class="star-btn" data-star="2" type="button">★</button>
+        <button class="star-btn" data-star="3" type="button">★</button>
+        <button class="star-btn" data-star="4" type="button">★</button>
+        <button class="star-btn" data-star="5" type="button">★</button>
+      </div>
+      <div class="feedback-note" id="ratingNote">اضغط على نجمة لتسجيل انطباعك</div>
+    </section>
+  </main>
+
+  <script>
+    // غيّر رقم الكافيه هنا بالصيغة الدولية بدون أصفار بادئة أو علامة + (مثال: 201012345678)
+    const CAFE_WHATSAPP = "201000000000";
+
+    const STORAGE_KEY = "oromo_vip_state_v1";
+    const defaultState = {
+      stamps: 0,
+      memberCode: "#ORM-2026",
+      orderNumber: 101,
+      pagerStatus: "waiting", // waiting | preparing | ready
+      rating: 0
     };
 
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-
-    // جلب رقم العضوية من الرابط مثل ?id=ORM-2026
-    const urlParams = new URLSearchParams(window.location.search);
-    const userId = urlParams.get('id') || 'ORM-2026';
-    document.getElementById('display-id').innerText = رقم العضوية: #${userId};
-
-    const userRef = ref(db, 'users/' + userId);
-
-    // إنشاء سجل للعميل تلقائياً إذا كان جديداً
-    get(userRef).then((snapshot) => {
-      if (!snapshot.exists()) {
-        set(userRef, {
-          cups: 0,
-          pagerStatus: "⏳ في انتظار تسجيل طلبك...",
-          addedOffer: false,
-          onTheWay: false
-        });
+    function loadState() {
+      try {
+        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+        return { ...defaultState, ...(saved || {}) };
+      } catch {
+        return { ...defaultState };
       }
-    });
+    }
 
-    // التحديث اللحظي للواجهة
-    onValue(userRef, (snapshot) => {
-      const data = snapshot.val();
-      if (!data) return;
+    let state = loadState();
 
-      // تحديث نص البيجر
-      document.getElementById('pager-status').innerText = data.pagerStatus;
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+      updateWhatsAppLink();
+    }
 
-      // تحديث الأكواب
+    function updateWhatsAppLink() {
+      const btn = document.getElementById("whatsappUpsellBtn");
+      const msg = مرحباً أورمو، رقم العضوية: ${state.memberCode} — أرغب في إضافة كوكيز/بسكويت بـ 15 جنيه مع طلبي.;
+      btn.href = https://wa.me/${CAFE_WHATSAPP}?text=${encodeURIComponent(msg)};
+    }
+
+    function playReadyBeep() {
+      try {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        const ctx = new AudioCtx();
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(880, ctx.currentTime);
+        gain.gain.setValueAtTime(0.12, ctx.currentTime);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.18);
+      } catch {}
+    }
+
+    function renderStamps() {
+      const grid = document.getElementById("stampsGrid");
+      grid.innerHTML = "";
+
       for (let i = 1; i <= 5; i++) {
-        const box = document.getElementById('cup-' + i);
-        if (i <= data.cups) {
-          box.classList.add('active');
-          box.innerText = '☕';
-        } else {
-          box.classList.remove('active');
-          box.innerText = i;
-        }
+        const el = document.createElement("div");
+        el.className = "stamp" + (state.stamps >= i ? " active" : "");
+        el.textContent = state.stamps >= i ? "☕" : i;
+        grid.appendChild(el);
       }
 
-      // تحديث خانة الهدية المجانية
-      const giftBox = document.getElementById('cup-6');
-      if (data.cups >= 5) {
-        giftBox.classList.add('unlocked');
-        giftBox.innerHTML = '🎉<br>جاهز!';
-      } else {
-        giftBox.classList.remove('unlocked');
-        giftBox.innerHTML = '🎁<br>مجاناً';
-      }
+      const giftEl = document.createElement("div");
+      const unlocked = state.stamps >= 6;
+      giftEl.className = "stamp gift" + (unlocked ? " unlocked" : "");
+      giftEl.innerHTML = unlocked ? "✅<br>مستحق" : "🎁<br>مجاناً";
+      grid.appendChild(giftEl);
+    }
 
-      // تحديث حالة زر العرض
-      const btnOffer = document.getElementById('btn-offer');
-      if (data.addedOffer) {
-        btnOffer.innerText = '✅ تم إضافة العرض لطلبك';
-        btnOffer.classList.add('added');
-      } else {
-        btnOffer.innerText = 'أضف العرض لطلبي الآن';
-        btnOffer.classList.remove('added');
-      }
+    function renderPager() {
+      const box = document.getElementById("pagerBox");
+      const badge = document.getElementById("orderNumBadge");
+      badge.textContent = طلب #${state.orderNumber};
+      box.className = "pager-status " + state.pagerStatus;
 
-      // تحديث حالة زر أنا على أول الشارع
-      const btnReady = document.getElementById('btn-ready');
-      if (data.onTheWay) {
-        btnReady.innerText = '🔥 تم إبلاغ الباريستا، قهوتك بتتجهز!';
-        btnReady.classList.add('sent');
+      if (state.pagerStatus === "preparing") {
+        box.textContent = "🔥 جاري تحضير مشروبك الآن...";
+      } else if (state.pagerStatus === "ready") {
+        box.textContent = "☕ طلبك جاهز للاستلام من الكاونتر!";
       } else {
-        btnReady.innerText = '🚀 أنا على أول الشارع - جهز قهوتي';
-        btnReady.classList.remove('sent');
+        box.textContent = "⏳ في انتظار تسجيل طلبك...";
+      }
+    }
+
+    function renderRating() {
+      const buttons = document.querySelectorAll(".star-btn");
+      const note = document.getElementById("ratingNote");
+      buttons.forEach((b) => {
+        const val = Number(b.dataset.star);
+        b.classList.toggle("selected", val <= state.rating);
+      });
+
+      if (!state.rating) {
+        note.textContent = "اضغط على نجمة لتسجيل انطباعك";
+      } else if (state.rating >= 4) {
+        note.textContent = شكراً لتقييمك (${state.rating}/5)! نسعد بخدمتك في أورمو.;
+      } else {
+        note.textContent = تم تسجيل ملاحظتك (${state.rating}/5) لتحسين تجربتك القادمة.;
+      }
+    }
+
+    function renderAll() {
+      document.getElementById("memberCode").value = state.memberCode;
+      renderStamps();
+      renderPager();
+      renderRating();
+      updateWhatsAppLink();
+    }
+
+    document.getElementById("addStampBtn").addEventListener("click", () => {
+      if (state.stamps < 6) {
+        state.stamps += 1;
+        saveState();
+        renderStamps();
       }
     });
 
-    // تفعيل زر العرض
-    document.getElementById('btn-offer').addEventListener('click', () => {
-      update(userRef, { addedOffer: true });
+    document.getElementById("resetStampBtn").addEventListener("click", () => {
+      state.stamps = 0;
+      saveState();
+      renderStamps();
     });
 
-    // تفعيل زر أنا على أول الشارع
-    document.getElementById('btn-ready').addEventListener('click', () => {
-      update(userRef, { 
-        onTheWay: true,
-        pagerStatus: "🔥 العميل في الطريق - جاري التحضير..."
+    document.getElementById("memberCode").addEventListener("input", (e) => {
+      state.memberCode = e.target.value.trim() || "#ORM-2026";
+      saveState();
+    });
+
+    document.getElementById("prepBtn").addEventListener("click", () => {
+      state.pagerStatus = "preparing";
+      saveState();
+      renderPager();
+    });
+
+    document.getElementById("readyBtn").addEventListener("click", () => {
+      state.pagerStatus = "ready";
+      saveState();
+      renderPager();
+      playReadyBeep();
+      if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
+    });
+
+    document.querySelectorAll(".star-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        state.rating = Number(btn.dataset.star);
+        saveState();
+        renderRating();
       });
     });
+
+    renderAll();
   </script>
 </body>
 </html>
