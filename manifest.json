@@ -1,14 +1,27 @@
 {
-  "id": "oromo-gold-vip",
-  "name": "نادي أورومو الذهبي",
-  "short_name": "أورومو VIP",
-  "description": "عضوية أورومو الذهبية وتجربة ضيافة راقية",
+  "name": "OROMO VIP",
+  "short_name": "OROMO VIP",
+  "description": "نادي أورومو VIP، عضويتك الملكية في أورومو كافيه",
   "lang": "ar",
   "dir": "rtl",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#100c09",
-  "theme_color": "#140f0b",
-  "icons": []
+  "orientation": "portrait",
+  "background_color": "#0B0B0D",
+  "theme_color": "#0B0B0D",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
 }
