@@ -1,525 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>OROMO VIP — كارت النخبة والبيجر الصامت</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#140f0b">
+  <meta name="description" content="عضوية أورومو الذهبية وتجربة ضيافة راقية">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>نادي أورومو الذهبي</title>
+  <link rel="manifest" href="manifest.json">
   <style>
-    :root {
-      --bg: #120d0a;
-      --card: #1e1510;
-      --card-2: #281c15;
-      --gold: #d4a359;
-      --gold-soft: rgba(212, 163, 89, 0.16);
-      --text: #f7efe6;
-      --muted: #b9a796;
-      --green: #22c55e;
-      --amber: #f59e0b;
-      --danger: #ef4444;
-      --border: rgba(212, 163, 89, 0.25);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
-    }
-
-    body {
-      background: radial-gradient(circle at top, #271a12 0%, var(--bg) 65%);
-      color: var(--text);
-      min-height: 100vh;
-      padding: 18px 14px 40px;
-      display: flex;
-      justify-content: center;
-    }
-
-    .app {
-      width: 100%;
-      max-width: 460px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-
-    .header {
-      text-align: center;
-      padding: 8px 6px 4px;
-    }
-
-    .header h1 {
-      font-size: 1.65rem;
-      letter-spacing: 1px;
-      color: var(--gold);
-    }
-
-    .header p {
-      font-size: 0.85rem;
-      color: var(--muted);
-      margin-top: 4px;
-    }
-
-    .card {
-      background: linear-gradient(160deg, var(--card-2), var(--card));
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 16px;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
-    }
-
-    .vip-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-
-    .vip-title {
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--gold);
-    }
-
-    .badge {
-      background: var(--gold-soft);
-      color: var(--gold);
-      border: 1px solid var(--border);
-      padding: 4px 10px;
-      border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-
-    .vip-desc {
-      font-size: 0.9rem;
-      color: var(--text);
-      margin-bottom: 14px;
-      line-height: 1.5;
-    }
-
-    .stamps {
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 7px;
-      margin-bottom: 14px;
-    }
-
-    .stamp {
-      aspect-ratio: 1 / 1.15;
-      border-radius: 12px;
-      border: 1.5px dashed rgba(212, 163, 89, 0.35);
-      background: rgba(0, 0, 0, 0.25);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 0.9rem;
-      color: var(--muted);
-      transition: all 0.2s ease;
-      text-align: center;
-      padding: 2px;
-    }
-
-    .stamp.active {
-      background: var(--gold);
-      color: #1a110b;
-      border-style: solid;
-      border-color: var(--gold);
-      transform: translateY(-2px);
-    }
-
-    .stamp.gift {
-      font-size: 0.75rem;
-      line-height: 1.2;
-    }
-
-    .stamp.gift.unlocked {
-      background: var(--green);
-      color: #09180e;
-      border-color: var(--green);
-    }
-
-    .member-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.82rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-      flex-wrap: wrap;
-    }
-
-    .member-input {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border);
-      color: var(--text);
-      border-radius: 10px;
-      padding: 6px 10px;
-      font-size: 0.82rem;
-      width: 140px;
-    }
-
-    .btn-row {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    button, a.btn {
-      border: none;
-      border-radius: 12px;
-      padding: 10px 14px;
-      font-size: 0.88rem;
-      font-weight: 700;
-      cursor: pointer;
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: opacity 0.18s ease, transform 0.15s ease;
-    }
-
-    button:active, a.btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn-gold {
-      background: var(--gold);
-      color: #18100a;
-      flex: 1;
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text);
-      border: 1px solid var(--border);
-    }
-
-    .btn-green {
-      background: var(--green);
-      color: #08180e;
-      width: 100%;
-    }
-
-    .pager-status {
-      margin-top: 10px;
-      padding: 14px;
-      border-radius: 14px;
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      text-align: center;
-      font-size: 1rem;
-      font-weight: 700;
-    }
-
-    .pager-status.waiting {
-      color: var(--muted);
-    }
-
-    .pager-status.preparing {
-      color: var(--amber);
-      border-color: rgba(245, 158, 11, 0.4);
-      background: rgba(245, 158, 11, 0.08);
-    }
-
-    .pager-status.ready {
-      color: var(--green);
-      border-color: rgba(34, 197, 94, 0.5);
-      background: rgba(34, 197, 94, 0.12);
-    }
-
-    .upsell h3 {
-      color: var(--gold);
-      font-size: 1.05rem;
-      margin-bottom: 6px;
-    }
-
-    .upsell p {
-      font-size: 0.88rem;
-      color: var(--muted);
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-
-    .price-strike {
-      text-decoration: line-through;
-      opacity: 0.7;
-      margin: 0 4px;
-    }
-
-    .stars {
-      display: flex;
-      gap: 8px;
-      justify-content: center;
-      margin: 10px 0;
-    }
-
-    .star-btn {
-      background: rgba(0, 0, 0, 0.3);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      font-size: 1.3rem;
-      padding: 6px 10px;
-      border-radius: 10px;
-    }
-
-    .star-btn.selected {
-      background: var(--gold-soft);
-      color: var(--gold);
-      border-color: var(--gold);
-    }
-
-    .feedback-note {
-      font-size: 0.82rem;
-      color: var(--muted);
-      text-align: center;
-      min-height: 20px;
-      margin-top: 6px;
-    }
+    :root{color-scheme:dark;--bg:#100c09;--panel:#1c1510;--gold:#d5ad65;--pale:#f4dfaa;--muted:#c0ae98;--green:#42b87d;--amber:#edb34d;--line:rgba(213,173,101,.27)}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% -10%,#49301c 0,#1b130e 36%,var(--bg) 72%);color:#fffaf2;font-family:Tahoma,"Segoe UI",sans-serif}.app{width:min(520px,calc(100% - 24px));margin:auto;padding:calc(16px + env(safe-area-inset-top)) 0 calc(38px + env(safe-area-inset-bottom))}.brand{text-align:center;padding:8px 0 16px}.brand h1{margin:0;color:var(--gold);font-size:25px;letter-spacing:.5px}.address{color:var(--muted);font-size:12px;line-height:1.9;margin:6px auto 0}.card{position:relative;overflow:hidden;background:linear-gradient(145deg,rgba(49,34,23,.91),rgba(22,16,12,.94));border:1px solid var(--line);border-radius:20px;padding:17px;margin:12px 0;box-shadow:0 16px 38px #0006;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}.vip-card{transform-style:preserve-3d;transition:transform .18s ease,box-shadow .3s ease;isolation:isolate}.vip-card:before{content:"";position:absolute;inset:-80%;z-index:-1;background:linear-gradient(110deg,transparent 38%,rgba(255,244,204,.08) 45%,rgba(255,238,182,.3) 50%,rgba(255,244,204,.08) 55%,transparent 62%);transform:translateX(-70%) rotate(18deg);animation:shimmer 8s ease-in-out infinite;pointer-events:none}.vip-card:after{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at var(--shine-x,50%) var(--shine-y,40%),rgba(255,226,155,.16),transparent 44%);pointer-events:none}@keyframes shimmer{0%,55%{transform:translateX(-75%) rotate(18deg)}80%,100%{transform:translateX(75%) rotate(18deg)}}.vipHead{display:flex;justify-content:space-between;align-items:center;gap:8px}.vipHead h2,.pagerTitle{margin:0;color:var(--gold);font-size:17px}.badge{border:1px solid var(--line);background:#d5ad6514;color:var(--pale);border-radius:999px;padding:6px 10px;font-size:11px;white-space:nowrap}.member{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:13px;color:var(--muted);font-size:13px}.member strong{color:var(--pale);font-size:16px;letter-spacing:.4px}.stampInfo{font-size:12px;color:var(--muted);margin:13px 0 0}.stamps{display:grid;grid-template-columns:repeat(6,1fr);gap:7px;margin-top:12px}.stamp{aspect-ratio:1/1.12;border:1px dashed var(--line);border-radius:11px;display:grid;place-items:center;color:var(--muted);background:#0002;font-weight:bold;font-size:13px}.stamp.active{background:linear-gradient(145deg,#f3d48f,#bd8d43);color:#21150c;border-style:solid;box-shadow:0 3px 12px #d5ad6530}.stamp.gift{font-size:10px}.stamp.gift.unlocked{background:var(--green);color:#092013}.qrRow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid #d5ad6520}.qrHint{color:var(--muted);font-size:11px;line-height:1.7}.qrBox{width:88px;height:88px;padding:5px;border-radius:10px;background:#fff;flex:none}.qrBox svg{width:100%;height:100%;display:block}.lock{position:absolute;left:8px;top:8px;width:29px;height:29px;border-radius:50%;padding:0;color:#d7bd88;background:#17110caa;border:1px solid #d5ad6540;font-size:12px;cursor:pointer;opacity:.72}.pager{margin-top:12px;border-radius:14px;padding:17px;text-align:center;font-weight:bold;border:1px solid var(--line);transition:.25s}.pager.waiting{color:var(--muted);background:#0002}.pager.preparing{color:var(--amber);background:#efb34a12;border-color:#efb34a66}.pager.ready{color:#07170e;background:var(--green);border-color:#86dca9;animation:pulse 1.15s ease-in-out infinite}@keyframes pulse{50%{box-shadow:0 0 25px #38b97885;filter:brightness(1.12)}}.sectionTitle{margin:0 0 10px;color:var(--gold);font-size:16px}.offer p{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.8}.offerSwitch,.buttonRow,.conciergeGrid{display:flex;gap:8px}.offerSwitch{margin-bottom:10px}.offerSwitch button{flex:1}.btn{border:0;border-radius:12px;padding:12px 13px;font-family:inherit;font-weight:bold;cursor:pointer;color:#fff;transition:transform .15s,filter .15s}.btn:active{transform:scale(.98)}.gold{background:linear-gradient(125deg,#edcf8e,#bd8d43);color:#21150c}.outline{background:#0002;color:#fff5e3;border:1px solid var(--line)}.green{background:var(--green);color:#07190f}.wa{display:flex;width:100%;text-decoration:none;justify-content:center}.conciergeGrid{display:grid;grid-template-columns:repeat(2,1fr)}.conciergeGrid .btn{font-size:13px}.stars{display:flex;justify-content:center;gap:8px;margin:12px 0}.star{padding:7px 9px;font-size:21px;color:var(--muted);background:#0002;border:1px solid var(--line)}.star.selected{color:var(--gold);background:#d5ad6522}.ratingNote{text-align:center;color:var(--muted);min-height:20px;font-size:12px;line-height:1.7}.install{display:none;width:100%;margin-top:10px}.modal{position:fixed;inset:0;z-index:20;background:#090604e8;display:none;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modalBox{width:min(420px,100%);background:linear-gradient(145deg,#302016,#19110c);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 18px 55px #0009}.modalBox h2{color:var(--gold);margin:0 0 8px;font-size:20px}.modalBox p{color:var(--muted);font-size:13px;line-height:1.8}.modalBox input,.staff input{width:100%;margin:7px 0;padding:13px;border-radius:11px;border:1px solid var(--line);background:#100b08;color:white;font:inherit}.modalActions{display:flex;gap:8px;margin-top:10px}.modalActions .btn{flex:1}.hidden{display:none!important}.staff{width:min(1040px,calc(100% - 24px));max-width:none}.staffGrid{display:grid;grid-template-columns:290px 1fr;gap:12px}.staff .card{margin:0}.controls{display:grid;gap:8px;margin-top:10px}.controls .btn{width:100%}.tableWrap{overflow:auto;margin-top:10px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border-bottom:1px solid var(--line);padding:9px;text-align:right;white-space:nowrap}th{color:var(--gold)}.hint{color:var(--muted);font-size:11px;line-height:1.7;margin-top:9px}.videoWrap{margin-top:10px}.videoWrap video{width:100%;border-radius:12px;display:none;background:#000}.toast{position:fixed;z-index:30;bottom:20px;left:50%;transform:translateX(-50%);background:#2b2118;border:1px solid var(--line);padding:11px 16px;border-radius:12px;box-shadow:0 8px 24px #0008;font-size:13px;display:none}.welcomeName{color:var(--pale)!important}@media(max-width:700px){.staffGrid{grid-template-columns:1fr}.staff{width:calc(100% - 24px)}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
-  <main class="app">
-    <header class="header">
-      <h1>OROMO COFFEE</h1>
-      <p>مدخل شارع طه حسين — الدور الأرضي — المنيا</p>
-    </header>
-
-    <!-- كارت الولاء VIP -->
-    <section class="card" aria-label="كارت النخبة VIP">
-      <div class="vip-top">
-        <div class="vip-title">كارت النخبة VIP</div>
-        <span class="badge">عضوية ذهبية</span>
-      </div>
-      <p class="vip-desc">
-        اجمع 5 أكواب قهوة واحصل على السادس + بسكويت مجاناً:
-      </p>
-
+  <main id="customerApp" class="app">
+    <header class="brand"><h1>OROMO COFFEE</h1><p class="address">شارع طه حسين — برج مصر للتأمين — الدور الأول علوي — المنيا</p><p id="visitGreeting" class="address" style="color:var(--pale)"></p></header>
+    <section id="vipCard" class="card vip-card" aria-label="كارت النخبة الذهبي">
+      <button id="lockBtn" class="lock" type="button" aria-label="دخول الموظفين" title="دخول الموظفين">♙</button>
+      <div class="vipHead"><h2>كارت النخبة VIP</h2><span class="badge">عضوية ذهبية</span></div>
+      <div class="member"><span>رقم عضويتك الخاص</span><strong id="memberCode">—</strong></div>
+      <p class="stampInfo">اجمع 5 أختام قهوة واستمتع بالسادس وهدية أورومو.</p>
       <div class="stamps" id="stampsGrid"></div>
-
-      <div class="member-row">
-        <label for="memberCode">رقم العضوية:</label>
-        <input
-          id="memberCode"
-          class="member-input"
-          type="text"
-          value="#ORM-2026"
-          aria-label="رقم العضوية"
-        />
-      </div>
-
-      <div class="btn-row">
-        <button class="btn-gold" id="addStampBtn" type="button">+ إضافة ختم قهوة</button>
-        <button class="btn-outline" id="resetStampBtn" type="button">تصفير</button>
-      </div>
+      <div class="qrRow"><div class="qrHint">امسح كود عضويتك عند الكاشير<br>لخدمة أسرع وأسهل</div><div class="qrBox" id="memberQr" aria-label="رمز QR للعضوية"></div></div>
     </section>
-
-    <!-- البيجر الإلكتروني الصامت -->
-    <section class="card" aria-label="البيجر الإلكتروني الصامت">
-      <div class="vip-top">
-        <div class="vip-title">البيجر الإلكتروني الصامت</div>
-        <span class="badge" id="orderNumBadge">طلب #101</span>
-      </div>
-
-      <div class="pager-status waiting" id="pagerBox">
-        ⏳ في انتظار تسجيل طلبك...
-      </div>
-
-      <div class="btn-row" style="margin-top: 12px;">
-        <button class="btn-outline" id="prepBtn" type="button" style="flex:1;">قيد التحضير</button>
-        <button class="btn-gold" id="readyBtn" type="button" style="flex:1;">جاهز للاستلام ☕</button>
-      </div>
-    </section>
-
-    <!-- عرض الكوكيز والبسكويت -->
-    <section class="card upsell" aria-label="عرض الكوكيز والبسكويت">
-      <h3>🍪 كمل مزاجك مع قهوتك!</h3>
-      <p>
-        أضف قطعة كوكيز طازجة أو بسكويت OROMO بـ <strong>15 جنيه</strong> فقط بدلاً من
-        <span class="price-strike">25 جنيه</span> مع قهوتك اليوم.
-      </p>
-      <a
-        id="whatsappUpsellBtn"
-        class="btn btn-green"
-        href="https://wa.me/201000000000?text=%D9%85%D8%B1%D8%AD%D8%A8%D8%A7%20%D8%A3%D9%88%D8%B1%D9%85%D9%88%D8%8C%20%D8%A3%D8%AD%D8%A8%20%D8%A3%D8%B6%D9%8A%D9%81%20%D9%83%D9%88%D9%83%D9%8A%D8%B2%2F%D8%A8%D8%B3%D9%83%D9%88%D9%8A%D8%AA%20%D8%A8%D9%80%2015%20%D8%AC%D9%86%D9%8A%D9%87%20%D9%85%D8%B9%20%D8%B7%D9%84%D8%A8%D9%8A."
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        اطلب الإضافة الآن (+15 ج) عبر واتساب
-      </a>
-    </section>
-
-    <!-- تقييم سريع -->
-    <section class="card" aria-label="تقييم التجربة">
-      <div class="vip-title" style="text-align: center; font-size: 0.98rem;">
-        قيّم تجربتك اليوم مع أورمو
-      </div>
-      <div class="stars" id="starsContainer">
-        <button class="star-btn" data-star="1" type="button">★</button>
-        <button class="star-btn" data-star="2" type="button">★</button>
-        <button class="star-btn" data-star="3" type="button">★</button>
-        <button class="star-btn" data-star="4" type="button">★</button>
-        <button class="star-btn" data-star="5" type="button">★</button>
-      </div>
-      <div class="feedback-note" id="ratingNote">اضغط على نجمة لتسجيل انطباعك</div>
-    </section>
+    <section class="card"><div class="vipHead"><h2 class="pagerTitle">البيجر الإلكتروني الصامت</h2><span class="badge" id="orderBadge">لا يوجد طلب</span></div><div id="pagerBox" class="pager waiting">⏳ في انتظار تسجيل طلبك...</div><p class="hint">تبقى هذه الصفحة مفتوحة أثناء زيارتك لتظهر حالة طلبك مباشرة على هذا الجهاز.</p></section>
+    <section class="card offer"><h3 class="sectionTitle">كمّل مزاجك مع قهوتك</h3><div class="offerSwitch"><button class="btn outline" data-offer="0" type="button">كرواسون سوبريم</button><button class="btn outline" data-offer="1" type="button">بريتزل أورومو</button></div><p id="offerText"></p><button id="secondDrinkBtn" class="btn outline" style="width:100%;margin-bottom:8px" type="button">اطلب مشروبك الثاني بخصم 20% وأنت على ترابيزتك</button><a id="offerWhatsApp" class="btn green wa" href="#" target="_blank" rel="noopener noreferrer">اطلب العرض عبر واتساب</a></section>
+    <section class="card"><h3 class="sectionTitle">خدمة الطاولة VIP</h3><p class="hint" style="margin:0 0 10px">اختر ما تحتاجه، وسنجهز لك رسالة طلب مختصرة.</p><div class="conciergeGrid"><button class="btn outline" data-service="مياه" type="button">💧 مياه</button><button class="btn outline" data-service="مناديل" type="button">نـ مناديل</button><button class="btn outline" data-service="فاتورة الحساب" type="button">🧾 فاتورة الحساب</button><button class="btn outline" data-service="مساعدة الويتر" type="button">🔔 مساعدة الويتر</button></div></section>
+    <section class="card"><div class="vipHead" style="justify-content:center"><h2 class="sectionTitle" style="margin:0">قيّم تجربتك في أورومو</h2></div><div class="stars" id="stars"><button class="btn star" data-star="1" type="button" aria-label="نجمة واحدة">★</button><button class="btn star" data-star="2" type="button" aria-label="نجمتان">★</button><button class="btn star" data-star="3" type="button" aria-label="ثلاث نجوم">★</button><button class="btn star" data-star="4" type="button" aria-label="أربع نجوم">★</button><button class="btn star" data-star="5" type="button" aria-label="خمس نجوم">★</button></div><div id="ratingNote" class="ratingNote">اضغط على نجمة لتسجيل انطباعك</div></section>
+    <button id="installBtn" class="btn gold install" type="button">تثبيت كارت أورومو على الشاشة الرئيسية</button>
   </main>
 
+  <main id="staffApp" class="app staff hidden">
+    <header class="brand"><h1>لوحة الموظفين والكاشير</h1><p class="address">إدارة محلية على هذا الجهاز — ابحث بالعضوية أو الهاتف أو امسح رمز QR</p></header>
+    <div class="staffGrid"><section class="card"><h2 class="sectionTitle">البحث عن عميل</h2><input id="staffSearch" placeholder="رقم الموبايل أو العضوية أو QR" autocomplete="off"><div class="buttonRow" style="margin-top:6px"><button id="scanBtn" class="btn outline" type="button">مسح QR بالكاميرا</button><button id="scanStop" class="btn outline hidden" type="button">إيقاف المسح</button></div><div class="videoWrap"><video id="scannerVideo" playsinline></video></div><div class="controls"><button id="staffAdd" class="btn gold" type="button">+ إضافة ختم قهوة</button><button id="staffReset" class="btn outline" type="button">تصفير بعد استلام الهدية</button><input id="orderNumber" placeholder="رقم الطلب أو الترابيزة"><button id="staffPreparing" class="btn outline" type="button">قيد التحضير</button><button id="staffReady" class="btn green" type="button">جاهز للاستلام ☕</button></div><p class="hint">تعمل قاعدة البيانات محلياً في متصفح هذا الجهاز فقط، ولا تتم مزامنتها بين أجهزة مختلفة.</p></section><section class="card"><div class="vipHead"><h2 class="sectionTitle" style="margin:0">قاعدة العملاء</h2><button id="exportCsv" class="btn outline" type="button">تصدير Excel/CSV</button></div><div class="tableWrap"><table><thead><tr><th>الاسم</th><th>الموبايل</th><th>العضوية</th><th>الأختام</th><th>التقييم</th></tr></thead><tbody id="customerRows"></tbody></table></div></section></div>
+  </main>
+
+  <div id="welcomeModal" class="modal"><div class="modalBox"><h2>مرحباً بك في أورومو</h2><p>يسعدنا انضمامك إلى نادي أورومو الذهبي. أدخل بياناتك مرة واحدة لإنشاء عضويتك.</p><input id="welcomeName" placeholder="الاسم" autocomplete="name"><input id="welcomePhone" placeholder="رقم الموبايل" inputmode="tel" autocomplete="tel"><div class="modalActions"><button id="welcomeSave" class="btn gold" type="button">إنشاء عضويتي</button></div></div></div>
+  <div id="pinModal" class="modal"><div class="modalBox"><h2>دخول الموظفين</h2><p>أدخل الرقم السري للوحة الكاشير.</p><input id="pinInput" type="password" inputmode="numeric" placeholder="الرقم السري"><div class="modalActions"><button id="pinCancel" class="btn outline" type="button">إلغاء</button><button id="pinOk" class="btn gold" type="button">دخول</button></div></div></div>
+  <div id="toast" class="toast" role="status"></div>
   <script>
-    // غيّر رقم الكافيه هنا بالصيغة الدولية بدون أصفار بادئة أو علامة + (مثال: 201012345678)
-    const CAFE_WHATSAPP = "201000000000";
+    // تعليق عربي: غيّر رقم واتساب الكافيه مستقبلاً من هذه القيمة فقط.
+    const CAFE_WHATSAPP="201022622210";
+    const STAFF_PIN="1234";
+    const GOOGLE_MAPS_REVIEW="https://maps.app.goo.gl/MnGnaCXTvJU945W87";
+    const CLIENT_KEY="oromo_vip_client_v2",DB_KEY="oromo_vip_clients_v2";
+    const $=id=>document.getElementById(id);
+    function readJSON(key,fallback){try{return JSON.parse(localStorage.getItem(key))||fallback}catch{return fallback}}
+    function getDB(){return readJSON(DB_KEY,[])}
+    function setDB(list){localStorage.setItem(DB_KEY,JSON.stringify(list))}
+    let client=readJSON(CLIENT_KEY,null), previousReady=false, offerIndex=0, deferredPrompt=null, scanStream=null, scanFrame=0;
+    function showToast(message){const t=$("toast");t.textContent=message;t.style.display="block";clearTimeout(showToast.timer);showToast.timer=setTimeout(()=>t.style.display="none",2600)}
+    function newMemberId(){let seq=Number(localStorage.getItem("oromo_member_sequence")||1044);const used=new Set(getDB().map(c=>c.member));let id;do{id="#ORM-"+(++seq)}while(used.has(id));localStorage.setItem("oromo_member_sequence",String(seq));return id}
+    function persistClient(){if(!client)return;localStorage.setItem(CLIENT_KEY,JSON.stringify(client));const db=getDB(),i=db.findIndex(c=>c.member===client.member);if(i<0)db.push(client);else db[i]={...db[i],...client};setDB(db)}
+    if(!client&&new URLSearchParams(location.search).get("view")!=="staff")$("welcomeModal").classList.add("show");
+    $("welcomeSave").onclick=()=>{const name=$("welcomeName").value.trim(),phone=$("welcomePhone").value.trim();if(name.length<2||phone.replace(/\D/g,"").length<7)return showToast("أدخل الاسم ورقم الموبايل بشكل صحيح");client={name,phone,member:newMemberId(),stamps:0,rating:0,pagerStatus:"waiting",orderNumber:""};persistClient();$("welcomeModal").classList.remove("show");renderClient();welcomeVisit()};
+    function welcomeVisit(){if(client)$("visitGreeting").textContent="أهلاً بعودتك، "+client.name+" — نتمنى لك وقتاً ممتعاً"}
+    function renderStamps(){if(!client)return;const grid=$("stampsGrid");grid.replaceChildren();for(let i=1;i<=5;i++){const el=document.createElement("div");el.className="stamp"+(client.stamps>=i?" active":"");el.textContent=client.stamps>=i?"☕":String(i);grid.appendChild(el)}const gift=document.createElement("div");gift.className="stamp gift"+(client.stamps>=6?" unlocked":"");gift.textContent=client.stamps>=6?"مستحق":"هدية";grid.appendChild(gift);$("memberCode").textContent=client.member;$("memberQr").innerHTML=qrSvg(client.member)}
+    function renderPager(){if(!client)return;const box=$("pagerBox");box.className="pager "+(client.pagerStatus||"waiting");$("orderBadge").textContent=client.orderNumber?"طلب "+client.orderNumber:"لا يوجد طلب";if(client.pagerStatus==="preparing")box.textContent="🔥 طلبك قيد التحضير الآن...";else if(client.pagerStatus==="ready")box.textContent="☕ طلبك جاهز للاستلام من الكاونتر!";else box.textContent="⏳ في انتظار تسجيل طلبك..."}
+    function renderClient(){if(!client)return;welcomeVisit();renderStamps();renderPager();renderRating()}
+    function playReadyAlert(){if(navigator.vibrate)navigator.vibrate([160,100,160,100,240]);try{const Audio=window.AudioContext||window.webkitAudioContext;if(!Audio)return;const ctx=new Audio(),now=ctx.currentTime;[659.25,783.99].forEach((freq,i)=>{const osc=ctx.createOscillator(),gain=ctx.createGain(),start=now+i*.2;osc.type="sine";osc.frequency.setValueAtTime(freq,start);gain.gain.setValueAtTime(.0001,start);gain.gain.exponentialRampToValueAtTime(.055,start+.035);gain.gain.exponentialRampToValueAtTime(.0001,start+.42);osc.connect(gain);gain.connect(ctx.destination);osc.start(start);osc.stop(start+.44)});setTimeout(()=>ctx.close(),1200)}catch(e){}}
+    function syncPager(){if(!client)return;const latest=getDB().find(c=>c.member===client.member);if(!latest)return;const was=client.pagerStatus;client={...client,...latest};renderClient();if(client.pagerStatus==="ready"&&was!=="ready")playReadyAlert()}
+    function tiltCard(e){const card=$("vipCard"),r=card.getBoundingClientRect(),p=e.touches?e.touches[0]:e,x=(p.clientX-r.left)/r.width,y=(p.clientY-r.top)/r.height;card.style.setProperty("--shine-x",(x*100)+"%");card.style.setProperty("--shine-y",(y*100)+"%");card.style.transform=`perspective(900px) rotateX(${(0.5-y)*5}deg) rotateY(${(x-.5)*7}deg)`}function resetTilt(){const c=$("vipCard");c.style.transform="";c.style.setProperty("--shine-x","50%");c.style.setProperty("--shine-y","40%")}$("vipCard").addEventListener("pointermove",tiltCard);$("vipCard").addEventListener("pointerleave",resetTilt);$("vipCard").addEventListener("touchmove",tiltCard,{passive:true});$("vipCard").addEventListener("touchend",resetTilt);
 
-    const STORAGE_KEY = "oromo_vip_state_v1";
-    const defaultState = {
-      stamps: 0,
-      memberCode: "#ORM-2026",
-      orderNumber: 101,
-      pagerStatus: "waiting", // waiting | preparing | ready
-      rating: 0
-    };
+    // مولّد QR محلي مبسط للعضوية: إصدار QR 1-L، مناسب لأرقام العضوية القصيرة دون مكتبات أو اتصال خارجي.
+    function qrSvg(text){const bytes=Array.from(new TextEncoder().encode(text));if(bytes.length>17)return "";const data=[0x40|((bytes.length>>4)&15),((bytes.length&15)<<4)|(bytes[0]>>4)];for(let i=0;i<bytes.length;i++){if(i===0)data[1]=((bytes.length&15)<<4)|(bytes[i]>>4);else data.push(((bytes[i-1]&15)<<4)|(bytes[i]>>4));if(i===bytes.length-1)data.push((bytes[i]&15)<<4)}let bits=[];bits.push(0,1,0,0);for(let i=7;i>=0;i--)bits.push((bytes.length>>i)&1);bytes.forEach(b=>{for(let i=7;i>=0;i--)bits.push((b>>i)&1)});for(let i=0;i<Math.min(4,152-bits.length);i++)bits.push(0);while(bits.length%8)bits.push(0);let words=[];for(let i=0;i<bits.length;i+=8){let v=0;for(let j=0;j<8;j++)v=(v<<1)|(bits[i+j]||0);words.push(v)}for(let pad=0;words.length<19;pad++)words.push(pad%2?0x11:0xec);
+      function mul(x,y){let z=0;while(y){if(y&1)z^=x;y>>=1;x<<=1;if(x&256)x^=0x11d}return z}let gen=[1],root=1;for(let i=0;i<7;i++){const next=Array(gen.length+1).fill(0);gen.forEach((v,j)=>{next[j]^=v;next[j+1]^=mul(v,root)});gen=next;root=mul(root,2)}let rem=Array(7).fill(0);words.forEach(b=>{const factor=b^rem.shift();rem.push(0);for(let j=0;j<7;j++)rem[j]^=mul(gen[j+1],factor)});const code=words.concat(rem),N=21,m=Array.from({length:N},()=>Array(N).fill(null));function finder(x,y){for(let dy=-1;dy<=7;dy++)for(let dx=-1;dx<=7;dx++){const xx=x+dx,yy=y+dy;if(xx<0||yy<0||xx>=N||yy>=N)continue;m[yy][xx]=(dx>=0&&dx<=6&&dy>=0&&dy<=6&&(dx===0||dx===6||dy===0||dy===6||(dx>=2&&dx<=4&&dy>=2&&dy<=4)))?1:0}}finder(0,0);finder(N-7,0);finder(0,N-7);for(let i=8;i<N-8;i++){if(m[6][i]===null)m[6][i]=i%2===0?1:0;if(m[i][6]===null)m[i][6]=i%2===0?1:0}const fmt=0x77c4;for(let i=0;i<15;i++){const bit=(fmt>>i)&1;let r,c;if(i<6){r=i;c=8}else if(i<8){r=i+1;c=8}else if(i===8){r=8;c=7}else if(i<��){r=8;c=14-i}else{r=8;c=14-i}if(i<=5){r=i;c=8}else if(i<=7){r=i+1;c=8}else if(i===8){r=8;c=7}else{r=8;c=14-i}m[r][c]=bit;let r2,c2;if(i<8){r2=8;c2=N-1-i}else{r2=N-15+i;c2=8}m[r2][c2]=bit}m[N-8][8]=1;let idx=0;for(let right=N-1;right>=1;right-=2){if(right===6)right--;for(let vert=0;vert<N;vert++){const upward=((right+1)&2)===0,y=upward?N-1-vert:vert;for(let j=0;j<2;j++){const x=right-j;if(m[y][x]!==null)continue;let bit=idx<code.length*8?((code[Math.floor(idx/8)]>>(7-(idx%8)))&1):0;idx++;if((x+y)%2===0)bit^=1;m[y][x]=bit}}}let rects="";for(let y=0;y<N;y++)for(let x=0;x<N;x++)if(m[y][x])rects+=`<rect x="${x}" y="${y}" width="1" height="1"/>`;return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 23 23" role="img" aria-label="QR ${text}"><rect x="-1" y="-1" width="23" height="23" fill="white"/> <g fill="#17110c">${rects}</g></svg>`}
 
-    function loadState() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
-        return { ...defaultState, ...(saved || {}) };
-      } catch {
-        return { ...defaultState };
-      }
-    }
+    const offers=[{name:"كرواسون سوبريم طازج",text:"كرواسون سوبريم طازج بسعر خاص لحاملي الكارت VIP."},{name:"بريتزل أورومو المخبوز",text:"بريتزل أورومو المخبوز طازجاً، بسعر خاص لحاملي كارت VIP."}];function orderLabel(){return client?.orderNumber||"لم يُحدد بعد"}function whatsappURL(message){return "https://wa.me/"+CAFE_WHATSAPP+"?text="+encodeURIComponent(message)}function details(){return "الاسم: "+(client?.name||"")+"\nرقم العضوية: "+(client?.member||"")+"\nرقم الطلب/الترابيزة: "+orderLabel()}
+    function renderOffer(){$("offerText").textContent=offers[offerIndex].text;$("offerWhatsApp").href=whatsappURL("مرحباً أورومو، أود طلب "+offers[offerIndex].name+".\n"+details())}document.querySelectorAll("[data-offer]").forEach(btn=>btn.onclick=()=>{offerIndex=Number(btn.dataset.offer);renderOffer()});$("secondDrinkBtn").onclick=()=>{if(!client)return;location.href=whatsappURL("مرحباً أورومو، أود طلب مشروب ثانٍ بخصم 20% على الترابيزة.\n"+details())};document.querySelectorAll("[data-service]").forEach(btn=>btn.onclick=()=>{if(!client)return;location.href=whatsappURL("طلب خدمة طاولة: "+btn.dataset.service+".\n"+details())});
+    document.querySelectorAll(".star").forEach(btn=>btn.onclick=()=>{if(!client)return;const rating=Number(btn.dataset.star);client.rating=rating;persistClient();renderRating();if(rating>=4){$("ratingNote").textContent="شكراً لتقييمك الملكي! يسعدنا رأيك على خرائط جوجل.";window.open(GOOGLE_MAPS_REVIEW,"_blank","noopener")}else{$("ratingNote").textContent="نعتذر عن تجربتك، يسعدنا مساعدتك فوراً.";window.open(whatsappURL("مرحباً أورومو، أود مشاركة ملاحظة بخصوص زيارتي ("+rating+" نجوم).\n"+details()),"_blank","noopener")}});function renderRating(){if(!client)return;document.querySelectorAll(".star").forEach(btn=>btn.classList.toggle("selected",Number(btn.dataset.star)<=client.rating));if(!client.rating)$("ratingNote").textContent="اضغط على نجمة لتسجيل انطباعك"}
 
-    let state = loadState();
-
-    function saveState() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-      updateWhatsAppLink();
-    }
-
-    function updateWhatsAppLink() {
-      const btn = document.getElementById("whatsappUpsellBtn");
-      const msg = مرحباً أورمو، رقم العضوية: ${state.memberCode} — أرغب في إضافة كوكيز/بسكويت بـ 15 جنيه مع طلبي.;
-      btn.href = https://wa.me/${CAFE_WHATSAPP}?text=${encodeURIComponent(msg)};
-    }
-
-    function playReadyBeep() {
-      try {
-        const AudioCtx = window.AudioContext || window.webkitAudioContext;
-        const ctx = new AudioCtx();
-        const osc = ctx.createOscillator();
-        const gain = ctx.createGain();
-        osc.type = "sine";
-        osc.frequency.setValueAtTime(880, ctx.currentTime);
-        gain.gain.setValueAtTime(0.12, ctx.currentTime);
-        osc.connect(gain);
-        gain.connect(ctx.destination);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.18);
-      } catch {}
-    }
-
-    function renderStamps() {
-      const grid = document.getElementById("stampsGrid");
-      grid.innerHTML = "";
-
-      for (let i = 1; i <= 5; i++) {
-        const el = document.createElement("div");
-        el.className = "stamp" + (state.stamps >= i ? " active" : "");
-        el.textContent = state.stamps >= i ? "☕" : i;
-        grid.appendChild(el);
-      }
-
-      const giftEl = document.createElement("div");
-      const unlocked = state.stamps >= 6;
-      giftEl.className = "stamp gift" + (unlocked ? " unlocked" : "");
-      giftEl.innerHTML = unlocked ? "✅<br>مستحق" : "🎁<br>مجاناً";
-      grid.appendChild(giftEl);
-    }
-
-    function renderPager() {
-      const box = document.getElementById("pagerBox");
-      const badge = document.getElementById("orderNumBadge");
-      badge.textContent = طلب #${state.orderNumber};
-      box.className = "pager-status " + state.pagerStatus;
-
-      if (state.pagerStatus === "preparing") {
-        box.textContent = "🔥 جاري تحضير مشروبك الآن...";
-      } else if (state.pagerStatus === "ready") {
-        box.textContent = "☕ طلبك جاهز للاستلام من الكاونتر!";
-      } else {
-        box.textContent = "⏳ في انتظار تسجيل طلبك...";
-      }
-    }
-
-    function renderRating() {
-      const buttons = document.querySelectorAll(".star-btn");
-      const note = document.getElementById("ratingNote");
-      buttons.forEach((b) => {
-        const val = Number(b.dataset.star);
-        b.classList.toggle("selected", val <= state.rating);
-      });
-
-      if (!state.rating) {
-        note.textContent = "اضغط على نجمة لتسجيل انطباعك";
-      } else if (state.rating >= 4) {
-        note.textContent = شكراً لتقييمك (${state.rating}/5)! نسعد بخدمتك في أورمو.;
-      } else {
-        note.textContent = تم تسجيل ملاحظتك (${state.rating}/5) لتحسين تجربتك القادمة.;
-      }
-    }
-
-    function renderAll() {
-      document.getElementById("memberCode").value = state.memberCode;
-      renderStamps();
-      renderPager();
-      renderRating();
-      updateWhatsAppLink();
-    }
-
-    document.getElementById("addStampBtn").addEventListener("click", () => {
-      if (state.stamps < 6) {
-        state.stamps += 1;
-        saveState();
-        renderStamps();
-      }
-    });
-
-    document.getElementById("resetStampBtn").addEventListener("click", () => {
-      state.stamps = 0;
-      saveState();
-      renderStamps();
-    });
-
-    document.getElementById("memberCode").addEventListener("input", (e) => {
-      state.memberCode = e.target.value.trim() || "#ORM-2026";
-      saveState();
-    });
-
-    document.getElementById("prepBtn").addEventListener("click", () => {
-      state.pagerStatus = "preparing";
-      saveState();
-      renderPager();
-    });
-
-    document.getElementById("readyBtn").addEventListener("click", () => {
-      state.pagerStatus = "ready";
-      saveState();
-      renderPager();
-      playReadyBeep();
-      if (navigator.vibrate) navigator.vibrate([120, 60, 120]);
-    });
-
-    document.querySelectorAll(".star-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        state.rating = Number(btn.dataset.star);
-        saveState();
-        renderRating();
-      });
-    });
-
-    renderAll();
+    $("lockBtn").onclick=()=>{$("pinInput").value="";$("pinModal").classList.add("show")};$("pinCancel").onclick=()=>$("pinModal").classList.remove("show");$("pinOk").onclick=()=>{if($("pinInput").value===STAFF_PIN)showStaff();else showToast("الرقم السري غير صحيح")};$("pinInput").onkeydown=e=>{if(e.key==="Enter")$("pinOk").click()};function showStaff(){$("customerApp").classList.add("hidden");$("staffApp").classList.remove("hidden");$("pinModal").classList.remove("show");history.replaceState(null,"","?view=staff");renderRows();$("staffSearch").focus()}if(new URLSearchParams(location.search).get("view")==="staff")showStaff();
+    function searchedClient(){const q=$("staffSearch").value.trim().toLowerCase();if(!q)return null;return getDB().find(c=>String(c.member).toLowerCase()===q||String(c.phone).replace(/\D/g,"").endsWith(q.replace(/\D/g,""))||String(c.name).toLowerCase()===q)||null}function staffSave(c){const db=getDB(),i=db.findIndex(x=>x.member===c.member);if(i<0)db.push(c);else db[i]=c;setDB(db);if(client?.member===c.member){client={...client,...c};localStorage.setItem(CLIENT_KEY,JSON.stringify(client));renderClient()}renderRows();showToast("تم حفظ التحديث محلياً")}
+    $("staffAdd").onclick=()=>{const c=searchedClient();if(!c)return showToast("ابحث عن عميل مسجل أولاً");if((c.stamps||0)>=6)return showToast("اكتمل رصيد الأختام، صفّر بعد تسليم الهدية");c.stamps=(c.stamps||0)+1;staffSave(c)};$("staffReset").onclick=()=>{const c=searchedClient();if(!c)return showToast("ابحث عن عميل مسجل أولاً");if(!confirm("تأكيد تصفير الأختام بعد استلام الهدية؟"))return;c.stamps=0;staffSave(c)};function updateOrder(status){const c=searchedClient();if(!c)return showToast("ابحث عن عميل مسجل أولاً");c.orderNumber=$("orderNumber").value.trim()||c.orderNumber||"—";c.pagerStatus=status;staffSave(c)}$("staffPreparing").onclick=()=>updateOrder("preparing");$("staffReady").onclick=()=>updateOrder("ready");$("staffSearch").oninput=renderRows;$("staffSearch").onkeydown=e=>{if(e.key==="Enter"){$("orderNumber").focus()}};
+    function escapeHTML(s){return String(s||"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]))}function renderRows(){const q=$("staffSearch").value.trim().toLowerCase(),rows=getDB().filter(c=>!q||[c.name,c.phone,c.member].some(v=>String(v||"").toLowerCase().includes(q)));$("customerRows").innerHTML=rows.map(c=>`<tr><td>${escapeHTML(c.name)}</td><td>${escapeHTML(c.phone)}</td><td>${escapeHTML(c.member)}</td><td>${Number(c.stamps)||0}</td><td>${Number(c.rating)||0}/5</td></tr>`).join("")||'<tr><td colspan="5">لا توجد سجلات مطابقة</td></tr>'}
+    $("exportCsv").onclick=()=>{const db=getDB(),header="الاسم,رقم الموبايل,رقم العضوية,الأختام,التقييم\r\n",body=db.map(c=>[c.name,c.phone,c.member,c.stamps||0,c.rating||0].map(v=>'"'+String(v??"").replace(/"/g,'""')+'"').join(",")).join("\r\n"),blob=new Blob(["\ufeff"+header+body],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="oromo-customers.csv";a.click();URL.revokeObjectURL(a.href)};
+    async function startScan(){if(!("BarcodeDetector"in window)){showToast("المسح بالكاميرا غير مدعوم هنا؛ اكتب رقم العضوية أو استخدم قارئ QR كلوحة مفاتيح");$("staffSearch").focus();return}try{const detector=new BarcodeDetector({formats:["qr_code"]});scanStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:"environment"}});const video=$("scannerVideo");video.srcObject=scanStream;video.style.display="block";await video.play();$("scanBtn").classList.add("hidden");$("scanStop").classList.remove("hidden");const scan=async()=>{if(!scanStream)return;try{const codes=await detector.detect(video);if(codes.length){$("staffSearch").value=codes[0].rawValue;stopScan();renderRows();showToast("تمت قراءة رمز العضوية")}}catch(e){}scanFrame=requestAnimationFrame(scan)};scan()}catch(e){showToast("تعذر فتح الكاميرا؛ أدخل رقم العضوية يدوياً");stopScan()}}function stopScan(){if(scanFrame)cancelAnimationFrame(scanFrame);if(scanStream){scanStream.getTracks().forEach(t=>t.stop());scanStream=null}$("scannerVideo").style.display="none";$("scanBtn").classList.remove("hidden");$("scanStop").classList.add("hidden")}$("scanBtn").onclick=startScan;$("scanStop").onclick=stopScan;
+    window.addEventListener("storage",e=>{if(e.key===DB_KEY)syncPager()});setInterval(syncPager,1200);
+    window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferredPrompt=e;$("installBtn").style.display="block"});$("installBtn").onclick=async()=>{if(!deferredPrompt)return showToast("يمكنك تثبيت الكارت من قائمة المتصفح: إضافة إلى الشاشة الرئيسية");deferredPrompt.prompt();await deferredPrompt.userChoice;deferredPrompt=null};if("serviceWorker"in navigator)window.addEventListener("load",()=>navigator.serviceWorker.register("./sw.js").catch(()=>{}));
+    renderOffer();if(client)renderClient();
   </script>
 </body>
 </html>
